@@ -75,3 +75,48 @@ def get_1_shanten_discards(hand_array, table):
             hand_array[discard_idx] += 1  # 把打出的牌捡回来
 
     return best_strategies
+
+def get_ultimate_best_discards(hand_array_14, shanten_calculator):
+    """
+    终极 AI 出牌策略：遍历手牌，寻找打出后进张面最宽的牌
+    """
+    best_strategies = []
+    max_effective_count = -1
+    min_shanten_after_discard = 99 # 记录打出后的最小向听数
+
+    # 1. 遍历 27 种牌，看看手里有哪些可以打
+    for discard_idx in range(27):
+        if hand_array_14[discard_idx] > 0:
+            
+            # 2. 假装打出这张牌 (变成 13 张)
+            hand_array_14[discard_idx] -= 1
+            
+            # 3. 算一下打出它之后，当前处于几向听？
+            current_shanten = shanten_calculator.get_shanten(hand_array_14)
+            
+            # 4. 启动探测器，测算这 13 张牌的进张数
+            effective_dict, total_count = shanten_calculator.get_effective_draws(hand_array_14)
+            
+            # 5. 核心选拔逻辑：
+            # 规则A: 优先选择向听数更小的打法 (比如能一向听，绝不选两向听)
+            if current_shanten < min_shanten_after_discard:
+                min_shanten_after_discard = current_shanten
+                max_effective_count = total_count
+                best_strategies = [(discard_idx, effective_dict, total_count)]
+                
+            # 规则B: 如果向听数一样，选进张数量 (total_count) 更多的！
+            elif current_shanten == min_shanten_after_discard:
+                if total_count > max_effective_count:
+                    max_effective_count = total_count
+                    best_strategies = [(discard_idx, effective_dict, total_count)]
+                elif total_count == max_effective_count:
+                    # 如果进张数也一样，那就并列第一，都推荐！
+                    best_strategies.append((discard_idx, effective_dict, total_count))
+                    
+            # 6. 把假装打出的牌捡回来，测试下一种打法
+            hand_array_14[discard_idx] += 1
+
+    return best_strategies
+
+
+
