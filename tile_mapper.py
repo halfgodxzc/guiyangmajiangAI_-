@@ -2,11 +2,11 @@ class TileMapper:
     def __init__(self):
         # 贵阳麻将只有万、条、筒，共 27 种牌
         self.labels = [
-            '1w', '2w', '3w', '4w', '5w', '6w', '7w', '8w', '9w',
-            '1t', '2t', '3t', '4t', '5t', '6t', '7t', '8t', '9t',
-            '1b', '2b', '3b', '4b', '5b', '6b', '7b', '8b', '9b'
+            '1c', '2c', '3c', '4c', '5c', '6c', '7c', '8c', '9c',
+            '1b', '2b', '3b', '4b', '5b', '6b', '7b', '8b', '9b',
+            '1d', '2d', '3d', '4d', '5d', '6d', '7d', '8d', '9d'
         ]
-        self.name_map = {'w': '万', 't': '条', 'b': '筒'}
+        self.name_map = {'c': '万', 'b': '条', 'd': '筒'}
 
     def yolo_to_array(self, yolo_output):
         arr = [0] * 27

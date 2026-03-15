@@ -14,7 +14,7 @@ def main():
     # 【测试用例】
     # 你可以随时换成极度烂牌，看看多向听引擎的威力！
     # ---------------------------------------------------------
-    mock_yolo_output = ['1w', '2w', '3w', '5w', '8w', '9w', '2t', '2t', '5t', '5t', '8t', '6t', '3b', '9b']
+    mock_yolo_output = ['1c', '2c', '3c', '5c', '8c', '9c', '2b', '2b', '5b', '5b', '8b', '6b', '3d', '9d']
     print(f"📷 [YOLO端] 摸牌后总计14张: {mock_yolo_output}")
 
     mapper = tile_mapper.TileMapper()
